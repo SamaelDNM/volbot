@@ -6,10 +6,7 @@ import requests
 import json
 import decimal
 import sys
-
-# symbol to trade
-# enter your desired target symbol here
-symbol = ''
+from volbot import symbol
 
 # authentication info from Coinbene
 apiid = ''

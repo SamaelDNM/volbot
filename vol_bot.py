@@ -18,6 +18,8 @@ General Notes: ask = sell, bid = buy
 
 """
 
+symbol = ''
+
 def sell_and_buy_orders(bids, asks, amount):
 
 	bid_price = bids[0]['price']
@@ -156,6 +158,7 @@ def run_trades(symbol, restriction_type, limit):
 		return amount_traded
 
 if __name__ == '__main__':
+	global symbol
 
 	# get the two tickers for trading and create trade symbol
 	tickers = []
