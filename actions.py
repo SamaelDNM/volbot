@@ -45,7 +45,8 @@ def place_order(order, order_type):
 	quantity = float(order[1])
 
 	if order_type == 'bid':
-		if enough_balance(order, 'SRCOIN'):
+		# enter ticker for second argument
+		if enough_balance(order, ''):
 			data_dict = {
 				'apiid': apiid, 
 				'price': float_to_str(price),
@@ -67,7 +68,8 @@ def place_order(order, order_type):
 			
 	else:
 
-		if enough_balance(order, 'SRCOIN'):
+		# enter ticker for second argument
+		if enough_balance(order, ''):
 			data_dict = {
 				'apiid': apiid, 
 				'price': float_to_str(price),

@@ -6,7 +6,7 @@ This bot creates volume for a specified symbol on the Coinbene exchange using th
 
 # Implementation
 
-The bot itself uses very simple Python libraries and uses the Coinbene API. There is a restriction imposed, where the user inputs a time/amount/both restriction, and at which point, the bot will come to a stop. To use the bot, you must have an account at Coinbene and generate an APIID as well as a secret key.
+The bot itself uses very simple Python libraries and uses the [Coinbene API](). There is a restriction imposed, where the user inputs a time/amount/both restriction, and at which point, the bot will come to a stop. To use the bot, you must have an account at Coinbene and generate an APIID as well as a secret key.
 
 # Usage
 
