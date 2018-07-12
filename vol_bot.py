@@ -20,6 +20,10 @@ General Notes: ask = sell, bid = buy
 
 symbol = ''
 
+def round_two_decimals(num):
+	dec = Decimal(num)
+	return float(round(dec, 2))
+
 def sell_and_buy_orders(bids, asks, amount):
 
 	bid_price = bids[0]['price']
@@ -70,7 +74,7 @@ def successful_trade(response, restriction_type, limit):
 	# change this for min/max amount of coins at any given trade
 	amount_to_exchange = random.randint(50, 3001) * 25
 	if restriction_type == 'coin' or restriction_type == 'both':
-		amount_to_exchange = min(amount_to_exchange, limit)
+		amount_to_exchange = min(amount_to_exchange, round_two_decimals(limit))
 	print('Amount_to_exchange:', amount_to_exchange)
 			
 	# get combination of bids and asks that trade same volume/quantity
@@ -132,6 +136,7 @@ def run_trades(symbol, restriction_type, limit):
 				response = get_orderbook(symbol, 5)
 				trade, amount_to_exchange = successful_trade(response, restriction_type, five_min_limit)
 				
+				# if the 5 minute amount limit is finished, rest
 				if amount_to_exchange == 0:
 					time.sleep(300-(time.time()-temp_start))
 					print('\nWaiting until 5 minutes zzzzz\n')
@@ -146,14 +151,6 @@ def run_trades(symbol, restriction_type, limit):
 					print('!!!!!!!!!!!!!!!!!')
 				
 				stagger()
-
-			# while amount_traded != five_min_limit*five_min_counter:
-			# 	trade, amount_to_exchange = successful_trade(response, restriction_type, five_min_limit)
-			# 	if trade:
-			# 		print('!!!!!!!!!!!!!!!!!')
-			# 		print('Amount traded at the end of 5 minutes (extra leftover): {}'.format(amount_to_exchange))
-			# 		amount_traded += amount_to_exchange
-			# 		print('!!!!!!!!!!!!!!!!!')
 
 		return amount_traded
 
@@ -180,6 +177,7 @@ if __name__ == '__main__':
 		amount_limit = int(input('\nEnter total volume you would like to generate: '))
 		amount_traded = run_trades(symbol, restriction_type, amount_limit)
 
+	# trades the amount or less than the amount specified (will never exceed)
 	elif restriction_type == 'both':
 		time_limit = int(input('\nEnter total duration to run bot (in hours): ')) * 3600
 		amount_limit = int(input('\nEnter total volume you would like to generate: '))
@@ -189,8 +187,11 @@ if __name__ == '__main__':
 		print('\nInvalid input. Please enter an option between "time", "coin", and "both".\n')
 		sys.exit(1)
 
+	# get ending stats
 	end_balances = get_balances(tickers)
 	end_volume = get_volume(symbol)
+
+	# print results
 	print('------------------------------------------------------------------\n')
 	print(str(amount_traded) + ' volume generated in total.')
 	print('Starting balances:\n{}: {}\n{}: {}\n'.format(tickers[0], start_balances[0], tickers[1], start_balances[1]))
