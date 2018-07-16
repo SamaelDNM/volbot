@@ -28,11 +28,14 @@ def sell_and_buy_orders(bids, asks, amount):
 
 	bid_price = bids[0]['price']
 	ask_price = asks[0]['price']
+	num_bids = int(round((ask_price - bid_price)*1e8)) - 1
+	inc = 1e-08
 
 	print('Price range: ' + str(bid_price) + ' to ' + str(ask_price))
 
 	# the increment must be calculated separately to match the precision of price
-	possible_sell_prices = np.arange(bid_price+1e-8, ask_price, 1e-8)
+	possible_sell_prices = np.linspace(bid_price+inc, bid_price+inc+(inc*num_bids), num_bids, endpoint = False)
+
 
 	if len(possible_sell_prices) == 0:
 		place_order([bids[0]['price'], bids[0]['quantity']], 'ask')
@@ -75,10 +78,14 @@ def successful_trade(response, restriction_type, limit):
 	amount_to_exchange = random.randint(50, 3001) * 25
 	if restriction_type == 'coin' or restriction_type == 'both':
 		amount_to_exchange = min(amount_to_exchange, round_two_decimals(limit))
-	print('Amount_to_exchange:', amount_to_exchange)
+	
+	if amount_to_exchange == 0:
+		trade = False
+	else:
+		print('Amount_to_exchange:', amount_to_exchange)
 			
-	# get combination of bids and asks that trade same volume/quantity
-	trade = sell_and_buy_orders(bids, asks, amount_to_exchange)
+		# get combination of bids and asks that trade same volume/quantity
+		trade = sell_and_buy_orders(bids, asks, amount_to_exchange)
 	return trade, amount_to_exchange
 
 def run_trades(symbol, restriction_type, limit):
@@ -138,7 +145,8 @@ def run_trades(symbol, restriction_type, limit):
 				
 				# if the 5 minute amount limit is finished, rest
 				if amount_to_exchange == 0:
-					time.sleep(300-(time.time()-temp_start))
+					if (time.time()-temp_start) < 300:
+						time.sleep(300-(time.time()-temp_start))
 					print('\nWaiting until 5 minutes zzzzz\n')
 					break
 
