@@ -6,7 +6,8 @@ import requests
 import json
 import decimal
 import sys
-from volbot import symbol
+
+symbol = ''
 
 # authentication info from Coinbene
 apiid = ''

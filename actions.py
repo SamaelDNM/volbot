@@ -66,7 +66,7 @@ def place_order(order, order_type):
 				print('Price', price, '    Quantity:', quantity, '     ' + order_type.upper() + ' Trade: Success!')
 				return True
 			
-	else:
+	elif order_type == 'ask':
 
 		# enter ticker for second argument
 		if enough_balance(order, ''):
