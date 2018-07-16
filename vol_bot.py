@@ -18,8 +18,6 @@ General Notes: ask = sell, bid = buy
 
 """
 
-symbol = ''
-
 def round_two_decimals(num):
 	dec = Decimal(num)
 	return float(round(dec, 2))
@@ -163,7 +161,6 @@ def run_trades(symbol, restriction_type, limit):
 		return amount_traded
 
 if __name__ == '__main__':
-	global symbol
 
 	# get the two tickers for trading and create trade symbol
 	tickers = []
