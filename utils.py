@@ -14,10 +14,10 @@ apiid = ''
 secret = ''
 
 # use GET requests for this
-URL_MARKET = 'http://api.coinbene.com/v1/market/'
+URL_MARKET = 'https://graviex.net//api/v3/markets'
 
 # use POST requests for this
-URL_TRADE = 'http://api.coinbene.com/v1/trade/'
+URL_TRADE = 'https://graviex.net//api/v3/trades'
 
 # to satisfy API formatting requirements
 headers = {'content-type': 'application/json;charset-utf-8', 
